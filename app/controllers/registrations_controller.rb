@@ -31,7 +31,7 @@ class RegistrationsController < ApplicationController
     params.permit! # Permit all Paypal input params
     status = params[:payment_status]
     if status == "Completed"
-      @registration = Registration.find params[:invoice]
+      @registration = Registration.find_by_invoice_key params[:invoice]
       @registration.update_attributes notification_params: params, status: status, transaction_id: params[:txn_id], purchased_at: Time.now
     end
     render nothing: true
